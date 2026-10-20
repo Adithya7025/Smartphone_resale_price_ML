@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smartphone Resale Price Prediction</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div class="eyebrow">SMARTPHONE VALUATION</div>
+      <h1>Resale Price Predictor</h1>
+      <p>Enter your phone details to estimate its resale value.</p>
+    </header>
+
+    <div class="progress-top">
+      <span id="stepLabel">Step 1 of 4</span>
+      <span id="stepTitle">Basic Details</span>
+    </div>
+
+    <div class="progress">
+      <div id="progressFill"></div>
+    </div>
+
+    <form id="phoneForm" novalidate>
+
+      <!-- STEP 1: BASIC DETAILS -->
+      <section class="step active" data-title="Basic Details">
+        <h2>Basic Details</h2>
+        <p class="hint">Tell us about your smartphone.</p>
+
+        <div class="fields">
+          <label>Brand
+            <input type="text" name="brand"
+                   placeholder="Enter smartphone brand" required>
+          </label>
+
+          <label>Model
+            <input type="text" name="model"
+                   placeholder="Enter smartphone model" required>
+          </label>
+
+          <label>RAM (GB)
+            <input type="number" name="ram_gb"
+                   placeholder="Enter RAM in GB" min="1" required>
+          </label>
+
+          <label>Storage (GB)
+            <input type="number" name="storage_gb"
+                   placeholder="Enter storage in GB" min="1" required>
+          </label>
+        </div>
+      </section>
+
+      <!-- STEP 2: PHONE SPECIFICATIONS -->
+      <section class="step" data-title="Phone Specifications">
+        <h2>Phone Specifications</h2>
+        <p class="hint">Provide the technical and purchase details.</p>
+
+        <div class="fields">
+          <label>Operating System
+            <select name="os_type" required>
+              <option value="" selected disabled>Select operating system</option>
+              <option value="Android">Android</option>
+              <option value="iOS">iOS</option>
+            </select>
+          </label>
+
+          <label>5G Support
+            <select name="has_5g" required>
+              <option value="" selected disabled>Select 5G support</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </label>
+
+          <label>Original Price (₹)
+            <input type="number" name="original_price"
+                   placeholder="Enter original price"
+                   min="0" required>
+          </label>
+
+          <label>Release Year
+            <input type="number" name="release_year"
+                   placeholder="Enter release year"
+                   min="1990" max="2026" required>
+          </label>
+
+          <label>Age (Months)
+            <input type="number" name="age_months"
+                   placeholder="Enter phone age in months"
+                   min="0" required>
+          </label>
+        </div>
+      </section>
+
+      <!-- STEP 3: PHONE CONDITION -->
+      <section class="step" data-title="Phone Condition">
+        <h2>Phone Condition</h2>
+        <p class="hint">Describe the current condition of your device.</p>
+
+        <div class="fields">
+          <label>Condition
+            <select name="condition" required>
+              <option value="" selected disabled>Select condition</option>
+              <option value="Excellent">Excellent</option>
+              <option value="Good">Good</option>
+              <option value="Fair">Fair</option>
+              <option value="Poor">Poor</option>
+            </select>
+          </label>
+
+          <label>Battery Health (%)
+            <input type="number" name="battery_health"
+                   placeholder="Enter battery health"
+                   min="0" max="100" required>
+          </label>
+
+          <label>Screen Cracked
+            <select name="screen_cracked" required>
+              <option value="" selected disabled>Select option</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </label>
+
+          <label>Body Damage
+            <select name="body_damage" required>
+              <option value="" selected disabled>Select option</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </label>
+
+          <label>Repair History
+            <select name="repair_history" required>
+              <option value="" selected disabled>Select option</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </label>
+
+          <label>Water Damage
+            <select name="water_damage" required>
+              <option value="" selected disabled>Select option</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <!-- STEP 4: ADDITIONAL DETAILS -->
+      <section class="step" data-title="Additional Details">
+        <h2>Additional Details</h2>
+        <p class="hint">Almost done! Complete the final details.</p>
+
+        <div class="fields">
+          <label>City Tier
+            <select name="city_tier" required>
+              <option value="" selected disabled>Select city tier</option>
+              <option value="Tier1">Tier1</option>
+              <option value="Tier2">Tier2</option>
+              <option value="Tier3">Tier3</option>
+            </select>
+          </label>
+
+          <label>Seller Type
+            <select name="seller_type" required>
+              <option value="" selected disabled>Select seller type</option>
+              <option value="Individual">Individual</option>
+              <option value="Dealer">Dealer</option>
+            </select>
+          </label>
+
+          <label>Warranty Remaining (Months)
+            <input type="number" name="warranty_remaining_months"
+                   placeholder="Enter remaining warranty"
+                   min="0" required>
+          </label>
+
+          <label>Original Box Available
+            <select name="box_available" required>
+              <option value="" selected disabled>Select option</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </label>
+
+          <label>Charger Available
+            <select name="charger_available" required>
+              <option value="" selected disabled>Select option</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </label>
+
+          <label>Market Demand Score
+            <input type="number" name="market_demand_score"
+                   placeholder="Enter score (1–100)"
+                   min="1" max="100" required>
+          </label>
+        </div>
+      </section>
+
+      <!-- STEP 5: PREDICTION RESULT -->
+      <section class="step result" data-title="Prediction Result">
+        <div class="result-icon">✓</div>
+        <div class="eyebrow">ESTIMATED RESALE VALUE</div>
+
+        <div id="price">₹0</div>
+
+        <p>Based on your phone's specifications and condition.</p>
+        <p class="hint">
+          This is a model estimate, not a guaranteed selling price.
+        </p>
+      </section>
+
+      <p id="error" class="error" role="alert" aria-live="polite"></p>
+
+      <nav class="actions">
+        <button type="button" id="backBtn" class="secondary">
+          ← Back
+        </button>
+
+        <button type="button" id="nextBtn">
+          Next →
+        </button>
+
+        <button type="button" id="restartBtn" hidden>
+          Predict Another Phone
+        </button>
+      </nav>
+
+    </form>
+  </main>
+
+  <script>
+    const form = document.getElementById('phoneForm');
+    const steps = [...document.querySelectorAll('.step')];
+
+    const backBtn = document.getElementById('backBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const restartBtn = document.getElementById('restartBtn');
+    const error = document.getElementById('error');
+
+    let current = 0;
+
+    function showStep(index) {
+      current = index;
+
+      steps.forEach((step, i) => {
+        step.classList.toggle('active', i === current);
+      });
+
+      document.getElementById('stepLabel').textContent =
+        current === 4 ? 'Completed' : `Step ${current + 1} of 4`;
+
+      document.getElementById('stepTitle').textContent =
+        steps[current].dataset.title;
+
+      document.getElementById('progressFill').style.width =
+        `${(Math.min(current + 1, 4) / 4) * 100}%`;
+
+      backBtn.hidden = current === 0 || current === 4;
+      nextBtn.hidden = current === 4;
+      restartBtn.hidden = current !== 4;
+
+      nextBtn.textContent =
+        current === 3 ? 'Predict Resale Price →' : 'Next →';
+
+      error.textContent = '';
+    }
+
+    function validateCurrentStep() {
+      for (const input of steps[current].querySelectorAll('input, select')) {
+        if (!input.checkValidity()) {
+          input.reportValidity();
+          return false;
+        }
+      }
+      return true;
+    }
+
+    backBtn.addEventListener('click', () => {
+      showStep(current - 1);
+    });
+
+    restartBtn.addEventListener('click', () => {
+      form.reset();
+      document.getElementById('price').textContent = '₹0';
+      showStep(0);
+    });
+
+    nextBtn.addEventListener('click', async () => {
+      if (!validateCurrentStep()) return;
+
+      if (current < 3) {
+        showStep(current + 1);
+        return;
+      }
+
+      nextBtn.disabled = true;
+      nextBtn.textContent = 'Predicting...';
+      error.textContent = '';
+
+      try {
+        const data = Object.fromEntries(new FormData(form).entries());
+
+        const response = await fetch('{{ url_for("predict") }}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(
+            result.error || 'Unable to predict resale price.'
+          );
+        }
+
+        document.getElementById('price').textContent =
+          new Intl.NumberFormat('en-IN', {
+            style: 'currency',
+            currency: 'INR',
+            maximumFractionDigits: 2
+          }).format(result.prediction);
+
+        showStep(4);
+
+      } catch (err) {
+        error.textContent = err.message;
+      } finally {
+        nextBtn.disabled = false;
+        nextBtn.textContent = 'Predict Resale Price →';
+      }
+    });
+
+    showStep(0);
+  </script>
+</body>
+</html>
